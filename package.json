@@ -1,0 +1,40 @@
+{
+  "name": "hi0711",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "serve": "browser-sync start --server ./public --files '**/*.*'",
+    "imagemin": "imagemin ./assets/img/* -o ./public/assets/img",
+    "build:pug": "pug --hierarchy -o ./public ./assets/tmpl; find ./public -name '_*.html' | xargs rm -rf & find ./public -name '*inc*' -type d | xargs rm -rf",
+    "build:css": "postcss -c postcss.config.js -o ./public/assets/css/common.css ./assets/css/common.css",
+    "build:js": "browserify ./assets/js/*.js | uglifyjs -m > ./public/assets/js/common.bundle.js",
+    "build": "yarn run build:pug & yarn run build:css & yarn run build:js",
+    "watch:css": "postcss -o ./public/assets/css/common.css ./assets/css/common.css -w --map",
+    "watch:js": "watch 'yarn run build:js' ./assets/js/",
+    "watch:pug": "watch 'yarn run build:pug' ./assets/tmpl/",
+    "watch": "yarn run watch:js & yarn run watch:pug & yarn run watch:css",
+    "start": "yarn run watch & yarn run serve"
+  },
+  "devDependencies": {
+    "autoprefixer": "^7.1.2",
+    "browser-sync": "^2.18.12",
+    "browserify": "^14.4.0",
+    "imagemin-cli": "^3.0.0",
+    "postcss-calc": "^6.0.0",
+    "postcss-cli": "^4.1.0",
+    "postcss-csso": "^2.0.0",
+    "postcss-hexrgba": "^1.0.0",
+    "postcss-import": "^10.0.0",
+    "postcss-nested": "^2.1.0",
+    "postcss-percentage": "^0.0.0",
+    "postcss-simple-vars": "^4.0.0",
+    "pug": "^2.0.0-rc.2",
+    "stylefmt": "^6.0.0",
+    "uglify-js": "^3.0.25",
+    "watch": "^1.0.2"
+  },
+  "dependencies": {
+    "sanitize.css": "^5.0.0"
+  }
+}
